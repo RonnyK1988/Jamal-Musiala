@@ -1,0 +1,650 @@
+/* Table of Contents
+
+1. Basic CSS
+2. Responsive Navigation
+3. Allgemeines Layout
+4. Grid Layout
+5. Wappen Flex
+6. News Grid
+7. Trophäen Grid
+8. Layout ToC
+9. Layout Tabellen
+10. Layout Balken Statistiken
+11. Bilder & Videos
+12. Sidebar Layout
+13. Footer Gestaltung
+14. Kontakt Formular
+15. Adress Layout  */
+
+
+/* 1. Basic CSS Codes */
+
+/* Schriftart */
+
+@font-face {
+    font-family: "Soccer Scoreboard";
+    src: local("Soccer Scoreboard"), url(../fonts/Soccer\ Scoreboard.otf) format(opentype);
+}
+
+@font-face {
+    font-family: Days;
+    src: local("Days"), url(../fonts/Days.ttf) format(truetype);
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+
+/* border-box aktivieren */
+
+*,*::before,*::after{box-sizing: border-box;}
+
+/* Collapsing Margin deaktivieren */
+
+h1,h2,h3,h4,h5,h6,p,ul,ol,blockquote{margin-top:0}
+
+/* Smooth Scrolling aktivieren*/
+
+html{
+    scroll-behavior: smooth;
+}
+
+/* Sprungmarken verstecken keinen Content mehr */
+
+h3[id]:before {
+    display: block;
+    height: 2.5em;   
+    margin-top: -2.5em; 
+    visibility: hidden;
+    content: "";
+}
+
+/* img margin and shadow*/
+
+main img{
+    margin-bottom: 1rem;
+}
+
+/* Externe Links markieren */
+
+.ext-link::after {
+    content: " \2197";
+}
+
+/* Inhalte verstecken */
+
+.visually-hidden{
+    position: absolute!important;
+    clip-path: circle(50%)!important;
+    overflow:hidden!important;
+    white-space: nowrap!important;
+    width: 1px!important;
+    height: 1px!important;
+    padding: 0!important;
+    border:0!important;
+    margin:-1px!important;
+}
+
+/* Überschriften Design */
+
+h2 {
+    font-family: "Soccer Scoreboard";
+    line-height: 2rem;
+    text-shadow: 0px 0px 2px #07b;
+    padding-top: 2rem;
+}
+
+h3,h4 {
+    font-family: Days;
+}
+
+/* 2. Responsive Navigation */
+
+.main-nav{
+    position: sticky; top: 0;
+    background-color: #8e1316;
+    color: white;
+    z-index: 100;
+}
+
+
+.main-nav ul{
+    display: flex;
+    flex-flow: column;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.main-nav a{
+    display: block;
+    text-decoration: none;
+    background-color: #8e1316;
+    color: white;
+    padding: 0.5rem 1rem;
+    transition: all .5s linear;
+}
+
+.main-nav a:hover,
+.main-nav a:focus{
+    background-color: #07b;
+    color: white;
+}
+
+.no-js .menubutton{display: none;}
+
+.js .menubutton{
+    display: flex;
+    align-items: center;
+
+    cursor: pointer;
+    background:inherit;
+    color: white;
+    font: inherit;
+    text-align: center;
+
+    padding: 0.5rem 1rem;
+    border: 0;
+    margin: 0;
+}
+
+.js .menubutton::before{
+    content: url(../Images/menuburger.svg);
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.25rem;
+}
+
+.js .main-nav ul{
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+.js .showmenu + ul{
+    max-height: 100rem;
+    transition: max-height 0.5s ease;
+    overflow: auto;
+}
+
+.js .showmenu.menubutton::before {
+    content: url(../Images/menuclose.svg);
+}
+
+@media screen and (min-width: 37.5em) {
+    .menubutton {display: none!important;}
+    .main-nav .inside {padding: 0 1rem;}
+    .main-nav ul {
+        max-height: none!important;
+        flex-flow: row;
+        padding: 0;
+    }
+    .main-nav li {
+        flex: 1;
+        text-align: center;
+        border-left: 1px solid #eee;
+        margin: auto;
+    }
+    .main-nav li:first-child {border-left:none;}
+}
+
+/* Ende @media */
+
+
+/* 3. Allgemeines Layout */
+
+h1{
+    display: block;
+    text-align: center;
+    background-color: #8e1316;
+    margin:0;
+}
+
+body{
+    max-width: 950px;
+    background-image: url(../images/football-background.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-attachment: fixed;
+    background-color: rgba(142, 19, 22, 0.05);
+    box-shadow: 0 0 25px #8e1316;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 60em) {
+    main {
+        box-shadow: 0 0 25px #8e1316 inset;
+    }
+
+    body {
+        background-image: none;
+        box-shadow: none;
+    }
+    
+}
+
+main{
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 0 2rem 1rem 2rem;
+}
+
+
+main a.ext-link, .news a, .int-link {
+    text-decoration: none;
+    color: #07b;
+    transition: all .5s linear;
+}
+main a.ext-link:visited, .news a:visited, .int-link:visited {
+    color: #8e1316;
+}
+
+main a.ext-link:hover, 
+main a.ext-link:focus,
+.news a:hover,
+.news a:focus,
+.int-link:hover,
+.int-link:focus {
+    color: #777;
+}
+
+.button{
+    display: inline-block;
+    min-width: 10rem;
+    background-color:rgba(142, 19, 22, 1);
+    color: white;
+    text-align: center;
+    text-shadow: 0px 0px 2px #07b;
+    text-decoration: none;
+    letter-spacing: 1px;
+    padding: 0.5rem 1rem;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 0.5rem;
+    transition: all .5s ease-in;
+}
+
+.button:hover, .button:focus {
+    background-color: #07b;
+    text-shadow: 0 0 1px #8e1316;
+}
+
+/* 4. Grid Layout */
+
+aside {
+    padding: 0.5rem;
+    background-color: rgba(46,106,189,0.3);
+    border-radius: 10px;
+    margin-bottom: auto;
+}
+
+aside h3 {
+    text-align: center;
+    margin: auto;
+}
+
+@media screen and (min-width: 46em) {
+    main {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        grid-column-gap: 3rem;
+        grid-row-gap: 1rem;
+        grid-template-areas: 
+        "intro intro"
+        "main sidebar";
+    }
+    
+    .content-intro{grid-area: intro;}
+    .content {grid-area: main;}
+    aside {grid-area: sidebar;}
+    
+}
+
+
+/* 5. Wappen Flex */
+
+.wappen-div {
+    display: flex;
+}
+
+.wappen {
+    max-width: 15%;
+}
+
+.wappen-div p {
+    font-size: 1.5rem;
+    margin:auto;
+}
+
+
+
+/* 6. News Grid */
+
+.news-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 2rem;
+}
+
+.news {
+    display: flex;
+    flex-flow: column;
+    background-color: rgba(46,106,189,0.3);
+    padding: 1rem;
+    margin: 0 0 1rem 0;
+    border-radius: 10px;
+}
+
+.news :last-child {
+    margin-top:auto;
+}
+
+@media screen and (max-width:35em) {
+    .news-grid { 
+        display: flex;
+        flex-flow: column;
+    }
+    
+}
+
+
+/* 7. Trophäen Grid */
+
+.trophäe-flex {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 11em 11em 11em;
+    grid-row-gap: 1rem;
+    grid-column-gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.trophäe-flex section {
+    background-color: rgba(46,106,189,0.3);
+}
+
+.trophäe-flex section h3 {
+    background-color: #8e1316;
+    color: white;
+    font-size: 1rem;
+    font-weight: 100;
+    padding:0.3rem 0 0.3rem 1rem;
+}
+
+.trophäe-flex section div {
+    display: flex;
+    flex-flow: row;
+}
+
+.trophäe-flex section img {
+    max-width: 100%;
+    max-height: 100%;
+    padding-right: 0.5rem;
+    border-right: 1px solid white;
+    margin-right: 1rem;
+}
+
+.trophäe-flex section ul {
+    padding: 0;
+    margin: 0 0 0 0.5rem;
+}
+
+.trophäe-flex section li {
+    font-size: small;
+    margin-bottom: 0.5rem;
+}
+
+@media screen and (max-width:58em) {
+    .trophäe-flex {
+        display: flex;
+        flex-flow: column;
+    }
+    
+}
+
+
+/* 8. Layout ToC */
+
+.toc{
+    display: inline-block;
+    box-shadow: 0 0 5px #8e1316 inset;
+    padding: 1rem;
+    border: 1px solid #8e1316;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.toc h3 {
+    font-size: 1rem;
+}
+
+.toc ol {
+    padding: 0;
+    margin: 0 0 0 1rem;
+}
+
+.toc a{
+    color: #07b;
+    text-decoration: none;
+    transition: all .5s linear;
+}
+
+.toc a:visited {
+    color: #8e1316;
+}
+
+.toc a:focus, .toc a:hover {
+    color: #777;
+}
+
+/* 9. Layout Tabellen */
+
+table{
+    word-break: break-word;
+    border-spacing: 1px;
+    margin: 0 0 2rem 0;
+}
+
+th {
+    text-align: right;
+    padding: 0.2rem 0.5rem;
+    border:2px solid #07b;    
+
+}
+
+td {
+    text-align: right;
+    padding: 0.2rem 0.5rem;
+    border:1px solid #8e1316;    
+}
+
+tr :first-child {
+    text-align: left;
+}
+ 
+/* 10. Layout Balken Statistiken */
+
+.balken-container-outside{
+    display: flex;
+    margin-bottom: 0.3rem;
+}
+
+.balken-container-inner {
+    display: flex;
+    flex-flow: row;
+    color: white;
+    padding: 0.3rem;
+}
+
+.balken-text {
+    color: black;
+    padding: 0.3rem;
+}
+
+.balken-value {
+    min-width: 1.6rem;
+    text-align: center;
+    background-color: #07b;
+    padding: 0.3rem;
+    margin-left: auto;
+}
+
+.balken-prozent {
+    background-color: rgba(142, 19, 22, 0);
+    padding-top: 0.6rem;
+    margin-left: auto;
+}
+
+.balken-diagramm:last-child {
+    margin-bottom: 1rem;
+}
+
+
+/* 11. Bilder & Videos */
+
+img, video{
+    max-width: 100%;
+    height: auto;
+}
+
+video {
+    padding: 0;
+    margin: 0;
+}
+
+iframe {
+    width: 100%;
+    aspect-ratio: 907/510;
+    border: 0;
+}
+
+
+@media screen and (min-width: 35em) {
+.img-right {
+    float: right;
+    max-width: 50%;
+    margin-left: 2rem;
+  }
+}
+
+figure, figure img{
+    padding: 0;
+    margin: 0;
+}
+
+
+figcaption {
+    text-align: center;
+    background-color:  rgba(46,106,189,0.3);
+    color: black;
+    padding: 0.7rem;
+    margin: -0.3rem 0 2rem 0;
+}
+
+
+/* 12. Sidebar Layout */
+
+aside {
+    padding: 1rem;
+}
+
+aside h3 {
+    margin-bottom: 0.5rem;
+}
+
+.social-nav ul{
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin:0
+}
+
+.social-nav li {
+    flex-flow: row;
+    padding:0.5rem;
+}
+
+.social-nav img[src$=".svg"] {
+    height: 2rem;
+    width: auto;
+}
+
+.quickinfo ul{
+    list-style: none;
+    font-size: 0.9em;
+    line-height: 1.3rem;
+    padding:0;
+    margin:0 0 1rem 0;
+}
+
+.linkliste ul {
+    list-style: none;
+    font-size: 0.9em;
+    line-height: 1.3rem;
+    padding:0;
+    margin:0;
+}
+
+
+/* 13. Footer Gestaltung */
+
+.footer-nav { 
+    background-color: #8e1316;
+}
+
+.footer-nav ul{
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    list-style: none;
+    margin-bottom: 0;
+}
+
+.footer-nav a{
+    display: block;
+    text-decoration: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: smaller;
+    transition: all 0.5s ease-in;
+}
+
+.footer-nav a:hover {
+    color: #777;
+}
+
+.footer-nav li:last-child{margin-left: auto;}
+
+.current a{
+    color: #07b;
+    text-decoration: underline;
+}
+
+
+/* 14. Kontaktformular */
+
+form {
+    max-width: 31em;
+    background-color: rgba(46,106,189,0.3);
+    padding: 1rem;
+    border-radius: 10px;
+
+}
+
+form div {
+    margin-bottom: 1rem;
+}
+
+label[for]{
+    display: block;
+    cursor: pointer;
+}
+
+/* 15. Address & Impressum Style */
+
+address {
+    font-style: normal;
+    line-height: 1.2;
+}
